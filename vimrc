@@ -1,40 +1,38 @@
-execute pathogen#infect()
-
-filetype on
 syntax on
-colorscheme Tomorrow-Night
-
-set colorcolumn=90
+filetype on
+set laststatus=2
+set colorcolumn=80
 set number
 
-set hidden
-set history=200
+call plug#begin('~/.vim/plugged')
 
-filetype indent on
-set nowrap
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set smartindent
-set autoindent
+Plug 'danilo-augusto/vim-afterglow'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'vim-syntastic/syntastic'
 
-autocmd BufWritePre * :%s/\s\+$//e
-set hlsearch
-nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
+call plug#end()
 
-nnoremap <Leader><Leader> :e#<CR>
-set showmatch
+map <C-p> :NERDTreeToggle<CR>
 
-let mapleader=" "
-map <leader>s :source ~/.vimrc
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
+colorscheme afterglow
+
+set encoding=utf-8
+
+" Squashing commits helpers
+command! SquashCommits call feedkeys("ggjV}:s/pick/squash\<CR>:wq\<CR>", 'tx')
+command! -nargs=1 NameSquashedCommit call feedkeys("/Please enter the commit message for<CR>kdggO\<Esc>xi<args>\<ESC>:wq\<CR>", 'tx')
 
